@@ -26,6 +26,7 @@ final class ScrollController {
 
   private var scrollObserver: NSKeyValueObservation!
   private(set) var isLocking: Bool = false
+  private var isHandlingEvent: Bool = false
   private var previousValue: CGPoint?
   let scrollView: UIScrollView
 
@@ -69,22 +70,34 @@ final class ScrollController {
   }
 
   private func handleScrollViewEvent(scrollView: UIScrollView, change: NSKeyValueObservedChange<CGPoint>) {
+    if isHandlingEvent { return }
+    isHandlingEvent = true
 
-    // For debugging
-
-    guard let oldValue = change.oldValue else { return }
-
-    guard isLocking else {
+    guard let oldValue = change.oldValue else {
+      isHandlingEvent = false
       return
     }
 
-    guard scrollView.contentOffset != oldValue else { return }
+    guard isLocking else {
+      isHandlingEvent = false
+      return
+    }
 
-    guard oldValue != previousValue else { return }
+    guard scrollView.contentOffset != oldValue else {
+      isHandlingEvent = false
+      return
+    }
+
+    guard oldValue != previousValue else {
+        isHandlingEvent = false
+        return
+    }
 
     previousValue = scrollView.contentOffset
 
     scrollView.setContentOffset(oldValue, animated: false)
+
+    isHandlingEvent = false
   }
 
 }
