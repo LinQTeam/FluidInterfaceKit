@@ -105,7 +105,7 @@ final class ScrollController {
     }
 
     previousValue = scrollView.contentOffset
-
+    debugPrint("\(timestamp): handleScrollViewEvent - setContentOffset")
     scrollView.setContentOffset(oldValue, animated: false)
 
     isHandlingEvent = false
