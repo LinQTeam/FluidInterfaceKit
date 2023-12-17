@@ -78,10 +78,6 @@ final class ScrollController {
       return
     }
 
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-    let timestamp = dateFormatter.string(from: Date())
-    debugPrint("\(timestamp): handleScrollViewEvent")
     // 垂直方向のスクロール（y座標の変更）を無視する
     // TODO: メッセージ画面で参照されているので縦方向のスクロールが発生した時に無限ループになってしまうため、このような対応を入れたが、本来は検知回数を少なくする対応が望ましい。
     if oldValue.y != scrollView.contentOffset.y {
@@ -105,7 +101,7 @@ final class ScrollController {
     }
 
     previousValue = scrollView.contentOffset
-    debugPrint("\(timestamp): handleScrollViewEvent - setContentOffset")
+
     scrollView.setContentOffset(oldValue, animated: false)
 
     isHandlingEvent = false
