@@ -30,7 +30,7 @@ let package = Package(
     .package(
       name: "Rideau",
       url: "https://github.com/LinQTeam/Rideau.git",
-      .revision("ae6966b7ebe0a58dd929ffa68f2f3ba9a6683cc6")
+      .revision("162b1a40e45fbe66c0cd1bb8171d4d698421450c")
     ),
   ],
   targets: [
