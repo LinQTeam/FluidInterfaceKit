@@ -29,8 +29,8 @@ let package = Package(
     ),
     .package(
       name: "Rideau",
-      url: "https://github.com/FluidGroup/Rideau.git",
-      .upToNextMajor(from: "2.1.0")
+      url: "https://github.com/LinQTeam/Rideau.git",
+      .revision("03b62352a87e6eeff99d96b11f59941b3d07b644")
     ),
   ],
   targets: [
