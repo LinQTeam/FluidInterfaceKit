@@ -111,11 +111,11 @@
       },
       {
         "package": "Rideau",
-        "repositoryURL": "https://github.com/FluidGroup/Rideau.git",
+        "repositoryURL": "https://github.com/LinQTeam/Rideau.git",
         "state": {
           "branch": null,
-          "revision": "fa560b52c246863dee5ab4b03197f6e4a9794607",
-          "version": "2.3.1"
+          "revision": "03b62352a87e6eeff99d96b11f59941b3d07b644",
+          "version": null
         }
       },
       {
