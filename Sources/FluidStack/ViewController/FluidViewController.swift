@@ -413,16 +413,16 @@ extension FluidViewController {
       }
     }
 
-    public enum TopBar {
+    public enum TopBar: Sendable {
 
-      public struct Navigation {
-        
+      public struct Navigation: Sendable {
+
         public enum Activity<NavigationBar: UINavigationBar> {
           case didLoad(FluidViewController, NavigationBar)
           case willTransition(FluidViewController, StackingRelation?, NavigationBar)
         }
 
-        public enum DisplayMode {
+        public enum DisplayMode: Sendable {
           /// It shows `UINavigationBar` if the target navigation-item has items (title, left items, right items).
           case automatic
           /// It shows always `UINavigationBar`.
@@ -436,7 +436,7 @@ extension FluidViewController {
 
         public let navigationBarClass: UINavigationBar.Type
 
-        let _activityHandler: (Activity<UINavigationBar>) -> Void
+        let _activityHandler: @Sendable @MainActor (Activity<UINavigationBar>) -> Void
 
         /// Initializer
         ///
@@ -446,7 +446,7 @@ extension FluidViewController {
           displayMode: DisplayMode = .automatic,
           usesBodyViewController: Bool = true,
           navigationBarClass: NavigationBar.Type,
-          activityHandler: @escaping (Activity<NavigationBar>) -> Void = { _ in }
+          activityHandler: @escaping @MainActor (Activity<NavigationBar>) -> Void = { _ in }
         ) {
           self.displayMode = displayMode
           self.usesBodyViewController = usesBodyViewController

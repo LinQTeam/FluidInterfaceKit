@@ -209,7 +209,7 @@ extension FluidExtentionViewController {
    - Parameters:
    - transition: You may set ``AnyRemovingTransition/noAnimation`` to disable animation, nil runs transition given view controller provides (if it's ``FluidTransitionViewController``).
    - fowardingToParent: Forwards to parent to pop if current stack do not have view controller to pop. No effects if the current stack prevents it by ``FluidStackController/Configuration-swift.struct/preventsFowardingPop``
-   
+
    - Warning: To run this method to ``FluidStackController`` does not mean to pop the current top view controller.
    A way to pop the top view controller:
    ```
@@ -220,6 +220,7 @@ extension FluidExtentionViewController {
     transition: AnyRemovingTransition? = nil,
     transitionForBatch: AnyBatchRemovingTransition? = .crossDissolve,
     forwardingToParent: Bool = true,
+    removingRule: RemovingRule = .cascade,
     completion: ((RemovingTransitionContext.CompletionEvent) -> Void)? = nil
   ) {
      
@@ -235,7 +236,8 @@ extension FluidExtentionViewController {
     _fluidPop(
       transition: transition,
       transitionForBatch: transitionForBatch,
-      forwardingToParent: forwardingToParent,
+      forwardingToParent: forwardingToParent, 
+      removingRule: removingRule,
       completion: completion
     )
     
@@ -247,7 +249,7 @@ extension FluidExtentionViewController {
    - Parameters:
    - transition: You may set ``AnyRemovingTransition/noAnimation`` to disable animation, nil runs transition given view controller provides (if it's ``FluidTransitionViewController``).
    - fowardingToParent: Forwards to parent to pop if current stack do not have view controller to pop. No effects if the current stack prevents it by ``FluidStackController/Configuration-swift.struct/preventsFowardingPop``
-   
+
    - Warning: To run this method to ``FluidStackController`` does not mean to pop the current top view controller.
    A way to pop the top view controller:
    ```
@@ -258,7 +260,8 @@ extension FluidExtentionViewController {
   public func fluidPop(
     transition: AnyRemovingTransition? = nil,
     transitionForBatch: AnyBatchRemovingTransition? = .crossDissolve,
-    forwardingToParent: Bool = true
+    forwardingToParent: Bool = true,
+    removingRule: RemovingRule = .cascade
   ) async -> RemovingTransitionContext.CompletionEvent {
     
     await withCheckedContinuation { continuation in
@@ -267,6 +270,7 @@ extension FluidExtentionViewController {
         transition: transition,
         transitionForBatch: transitionForBatch,
         forwardingToParent: forwardingToParent,
+        removingRule: removingRule,
         completion: { event in
           continuation.resume(returning: event)
       })
@@ -278,6 +282,7 @@ extension FluidExtentionViewController {
     transition: AnyRemovingTransition?,
     transitionForBatch: AnyBatchRemovingTransition?,
     forwardingToParent: Bool,
+    removingRule: RemovingRule,
     completion: ((RemovingTransitionContext.CompletionEvent) -> Void)?
   ) {
         
@@ -302,6 +307,7 @@ extension FluidExtentionViewController {
         transition: transition,
         transitionForBatch: transitionForBatch,
         forwardingToParent: forwardingToParent,
+        removingRule: removingRule,
         completion: completion
       )
       
@@ -309,6 +315,7 @@ extension FluidExtentionViewController {
       
       fluidStackContext
         .removeSelf(
+          removingRule: removingRule,
           transition: transition,
           transitionForBatch: transitionForBatch,
           completion: completion
